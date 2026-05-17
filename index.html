@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>happy birthday, rista.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Crimson+Pro:ital,wght@0,200;0,300;1,200;1,300&family=Dancing+Script:wght@400;500&family=Lato:ital,wght@0,100;0,300;1,100;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose:      #c97b8a;
+    --rose-soft: #e8b4be;
+    --rose-pale: #f5dce2;
+    --brown:     #6b3a2a;
+    --mocha:     #1e0d08;
+    --mocha-mid: #2a1510;
+    --cream:     #f7ede8;
+    --cream-dim: rgba(247,237,232,0.7);
+    --text-dim:  rgba(247,237,232,0.45);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; scroll-snap-type:y mandatory; }
+  body {
+    background: var(--mocha);
+    color: var(--cream);
+    font-family: 'Crimson Pro', serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CURSOR */
+  .cursor {
+    width:8px; height:8px; background:var(--rose);
+    border-radius:50%; position:fixed; pointer-events:none;
+    z-index:9999; transform:translate(-50%,-50%);
+  }
+  .cursor-ring {
+    width:32px; height:32px;
+    border:1px solid rgba(201,123,138,0.5);
+    border-radius:50%; position:fixed; pointer-events:none;
+    z-index:9998; transform:translate(-50%,-50%);
+    transition:all 0.15s ease;
+  }
+
+  /* STARS */
+  #starsCanvas {
+    position:fixed; top:0; left:0;
+    width:100%; height:100%;
+    pointer-events:none; z-index:0; opacity:0.55;
+  }
+
+  /* GRAIN */
+  .grain {
+    position:fixed; top:-50%; left:-50%;
+    width:200%; height:200%;
+    pointer-events:none; z-index:1; opacity:0.028;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation:grain 0.5s steps(2) infinite;
+  }
+  @keyframes grain {
+    0%{transform:translate(0,0)} 25%{transform:translate(-3%,-3%)}
+    50%{transform:translate(3%,3%)} 75%{transform:translate(-1%,1%)}
+    100%{transform:translate(1%,-1%)}
+  }
+
+  /* ============================
+     SLIDE 1 HERO
+  ============================ */
+  #slide1 {
+    height:100vh; scroll-snap-align:start;
+    position:relative;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+  .hero-bg {
+    position:absolute; inset:0; z-index:0;
+    background:
+      radial-gradient(ellipse at 50% 35%, rgba(180,80,100,0.2) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 80%, rgba(107,58,42,0.22) 0%, transparent 50%),
+      linear-gradient(160deg, #1e0d08 0%, #2a1510 45%, #1a0c0a 100%);
+  }
+  .hero-photo {
+    position:absolute; inset:0; z-index:1; overflow:hidden;
+    animation:heroZoom 22s ease-in-out infinite alternate;
+  }
+  .hero-photo img {
+    width:100%; height:100%;
+    object-fit:cover; object-position:center top;
+    filter:saturate(0.72) brightness(0.62) sepia(0.18);
+    display:block;
+  }
+  @keyframes heroZoom { from{transform:scale(1)} to{transform:scale(1.07)} }
+  .vignette {
+    position:absolute; inset:0; z-index:2;
+    background:
+      linear-gradient(to bottom, rgba(30,13,8,0.32) 0%, rgba(30,13,8,0.04) 35%, rgba(30,13,8,0.65) 80%, rgba(30,13,8,1) 100%),
+      radial-gradient(ellipse at center, transparent 35%, rgba(30,13,8,0.6) 100%);
+  }
+  .hero-content {
+    position:relative; z-index:10;
+    text-align:center;
+    display:flex; flex-direction:column; align-items:center;
+  }
+  .hero-label {
+    font-family:'Lato',sans-serif; font-weight:100;
+    font-size:0.68rem; letter-spacing:0.38em;
+    color:var(--rose-soft); text-transform:uppercase;
+    margin-bottom:2rem;
+    opacity:0; animation:fadeUp 1s ease 0.4s forwards;
+  }
+  .hero-title {
+    font-family:'Cormorant Garamond',serif; font-weight:300;
+    font-size:clamp(3.5rem,10vw,7.5rem); line-height:0.95;
+    color:var(--cream);
+    opacity:0; animation:fadeUp 1.2s ease 0.8s forwards;
+  }
+  .hero-sub {
+    font-family:'Dancing Script',cursive;
+    font-size:clamp(1rem,2.8vw,1.52rem);
+    color:var(--rose-soft); margin-top:1.1rem;
+    opacity:0; animation:fadeUp 1.2s ease 1.5s forwards;
+    max-width:480px; line-height:1.65;
+  }
+  .hero-clock {
+    font-family:'Lato',sans-serif; font-weight:100;
+    font-size:0.8rem; letter-spacing:0.28em;
+    color:var(--text-dim); margin-top:2.2rem;
+    opacity:0; animation:fadeUp 1s ease 2.1s forwards;
+  }
+  .hero-btn {
+    margin-top:2.8rem; padding:0.85rem 2.6rem;
+    border:1px solid var(--rose); background:transparent;
+    color:var(--rose-soft);
+    font-family:'Lato',sans-serif; font-weight:300;
+    font-size:0.72rem; letter-spacing:0.32em;
+    text-transform:uppercase; cursor:none;
+    position:relative; overflow:hidden;
+    opacity:0; animation:fadeUp 1s ease 2.6s forwards;
+    transition:color 0.4s;
+  }
+  .hero-btn::before {
+    content:''; position:absolute; inset:0;
+    background:var(--rose); transform:scaleX(0);
+    transform-origin:left; transition:transform 0.4s ease; z-index:-1;
+  }
+  .hero-btn:hover::before { transform:scaleX(1); }
+  .hero-btn:hover { color:var(--mocha); }
+  .hero-btn::after {
+    content:''; position:absolute; inset:-2px;
+    border:1px solid rgba(201,123,138,0.25);
+    animation:pulseBorder 2.5s ease infinite;
+  }
+  @keyframes pulseBorder {
+    0%,100%{opacity:0.3;transform:scale(1)}
+    50%{opacity:0;transform:scale(1.07)}
+  }
+  .scroll-indicator {
+    position:absolute; bottom:2.5rem; left:50%;
+    transform:translateX(-50%); z-index:10;
+    display:flex; flex-direction:column;
+    align-items:center; gap:0.5rem;
+    opacity:0; animation:fadeUp 1s ease 3.1s forwards;
+  }
+  .scroll-indicator span {
+    font-family:'Lato',sans-serif; font-weight:100;
+    font-size:0.58rem; letter-spacing:0.32em;
+    color:var(--text-dim); text-transform:uppercase;
+  }
+  .scroll-line {
+    width:1px; height:50px;
+    background:linear-gradient(to bottom, var(--rose), transparent);
+    animation:scrollLine 2s ease infinite;
+  }
+  @keyframes scrollLine {
+    0%{transform:scaleY(0);transform-origin:top;opacity:1}
+    50%{transform:scaleY(1);transform-origin:top;opacity:1}
+    51%{transform-origin:bottom}
+    100%{transform:scaleY(0);transform-origin:bottom;opacity:0}
+  }
+  @keyframes fadeUp {
+    from{opacity:0;transform:translateY(24px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+
+  /* ============================
+     SLIDE 2 MEMORIES
+  ============================ */
+  #slide2 {
+    min-height:100vh; scroll-snap-align:start;
+    position:relative;
+    padding:7rem 2rem 5rem;
+    display:flex; flex-direction:column; align-items:center;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse at 20% 30%, rgba(180,80,100,0.07) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 70%, rgba(107,58,42,0.12) 0%, transparent 50%),
+      linear-gradient(180deg, #1e0d08, #2a1510, #1e0d08);
+  }
+  .section-label {
+    font-family:'Lato',sans-serif; font-weight:100;
+    font-size:0.63rem; letter-spacing:0.42em;
+    color:var(--rose); text-transform:uppercase; margin-bottom:1rem;
+  }
+  .section-title {
+    font-family:'Cormorant Garamond',serif; font-weight:300;
+    font-size:clamp(2.2rem,5vw,3.6rem); color:var(--cream);
+    text-align:center; line-height:1.1; margin-bottom:0.7rem;
+  }
+  .section-desc {
+    font-family:'Crimson Pro',serif; font-size:1.05rem;
+    font-weight:200; font-style:italic; color:var(--text-dim);
+    text-align:center; max-width:400px; line-height:1.85;
+    margin-bottom:3.5rem;
+  }
+  .polaroid-grid {
+    width:100%; max-width:1000px;
+    display:flex; flex-wrap:wrap;
+    justify-content:center; gap:1.8rem; padding:1rem;
+  }
+  .polaroid {
+    background:#f7ede8;
+    padding:0.7rem 0.7rem 2.6rem;
+    box-shadow:0 8px 40px rgba(0,0,0,0.5),0 2px 8px rgba(0,0,0,0.3);
+    cursor:none;
+    transition:transform 0.4s ease, box-shadow 0.4s ease, z-index 0s;
+    opacity:0; animation:polaroidIn 0.8s ease forwards;
+    flex-shrink:0;
+  }
+  .polaroid:nth-child(1){animation-delay:0.10s;transform:rotate(-3deg)   translate(10px,-5px);}
+  .polaroid:nth-child(2){animation-delay:0.22s;transform:rotate(2deg)    translate(-5px,10px);}
+  .polaroid:nth-child(3){animation-delay:0.34s;transform:rotate(-1.5deg) translate(0,-8px);}
+  .polaroid:nth-child(4){animation-delay:0.46s;transform:rotate(3.5deg)  translate(8px,5px);}
+  .polaroid:nth-child(5){animation-delay:0.58s;transform:rotate(-2deg)   translate(-10px,0);}
+  .polaroid:nth-child(6){animation-delay:0.70s;transform:rotate(1deg)    translate(5px,8px);}
+  .polaroid:hover {
+    transform:rotate(0deg) scale(1.06) !important;
+    box-shadow:0 22px 65px rgba(0,0,0,0.6),0 4px 22px rgba(201,123,138,0.22);
+    z-index:100;
+  }
+  @keyframes polaroidIn {
+    from{opacity:0;transform:translateY(40px) scale(0.9);}
+    to{opacity:1;}
+  }
+  .polaroid-img {
+    width:200px; height:200px; object-fit:cover; display:block;
+    filter:saturate(0.82) sepia(0.1);
+  }
+  .polaroid-placeholder {
+    width:200px; height:200px;
+    background:linear-gradient(135deg, #3d1f14, #2a1510);
+    display:flex; align-items:center; justify-content:center;
+    flex-direction:column; gap:0.5rem;
+  }
+  .polaroid-placeholder .ph-icon { font-size:2rem; opacity:0.35; }
+  .polaroid-placeholder .ph-text {
+    font-family:'Lato',sans-serif; font-size:0.52rem;
+    letter-spacing:0.22em; color:rgba(201,123,138,0.45);
+    text-transform:uppercase;
+  }
+  .polaroid-caption {
+    font-family:'Dancing Script',cursive; font-size:0.85rem;
+    color:#3d1f14; text-align:center; padding-top:0.6rem; line-height:1.45;
+  }
+
+  /* LIGHTBOX */
+  .lightbox {
+    position:fixed; inset:0; background:rgba(12,4,2,0.93);
+    z-index:9000; display:none;
+    align-items:center; justify-content:center;
+    flex-direction:column; gap:1.5rem; padding:2rem;
+    backdrop-filter:blur(22px);
+  }
+  .lightbox.active { display:flex; }
+  .lb-placeholder {
+    width:400px; max-width:90vw; height:340px;
+    background:linear-gradient(135deg,#3d1f14,#2a1510);
+    display:flex; align-items:center; justify-content:center; font-size:3rem;
+  }
+  .lightbox img {
+    max-width:90vw; max-height:62vh; object-fit:contain;
+    box-shadow:0 0 80px rgba(201,123,138,0.15);
+  }
+  .lightbox-caption {
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:1.4rem; color:var(--rose-soft);
+    text-align:center; max-width:440px; line-height:1.75;
+  }
+  .lightbox-close {
+    position:fixed; top:2rem; right:2rem;
+    width:40px; height:40px;
+    background:none; border:1px solid rgba(201,123,138,0.3);
+    color:var(--rose); font-size:1.2rem; cursor:none;
+    display:flex; align-items:center; justify-content:center;
+    transition:background 0.3s;
+  }
+  .lightbox-close:hover { background:rgba(201,123,138,0.12); }
+
+  /* ============================
+     SLIDE 3 THINGS I LIKE
+  ============================ */
+  #slide3 {
+    min-height:100vh; scroll-snap-align:start;
+    position:relative;
+    padding:7rem 2rem 5rem;
+    display:flex; flex-direction:column; align-items:center;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse at 70% 20%, rgba(201,123,138,0.07) 0%, transparent 55%),
+      linear-gradient(180deg, #1e0d08, #241108, #1e0d08);
+  }
+  .gold-line {
+    width:40px; height:1px;
+    background:linear-gradient(to right, transparent, var(--rose), transparent);
+    margin:1.4rem auto;
+  }
+  .cards-grid {
+    display:flex; flex-wrap:wrap;
+    justify-content:center; gap:1.1rem;
+    max-width:860px; margin-top:0.5rem;
+  }
+  .like-card {
+    width:195px; padding:1.9rem 1.1rem;
+    background:rgba(201,123,138,0.05);
+    border:1px solid rgba(201,123,138,0.14);
+    backdrop-filter:blur(10px);
+    text-align:center; cursor:none;
+    position:relative; overflow:hidden;
+    transition:all 0.4s ease; border-radius:2px;
+  }
+  .like-card::before {
+    content:''; position:absolute; inset:0;
+    background:radial-gradient(ellipse at center, rgba(201,123,138,0.09) 0%, transparent 70%);
+    opacity:0; transition:opacity 0.4s;
+  }
+  .like-card:hover::before { opacity:1; }
+  .like-card:hover {
+    transform:translateY(-8px);
+    border-color:rgba(201,123,138,0.4);
+    box-shadow:0 18px 38px rgba(0,0,0,0.35),0 0 28px rgba(201,123,138,0.1);
+  }
+  .like-card.opened {
+    border-color:rgba(201,123,138,0.55);
+    background:rgba(201,123,138,0.09);
+  }
+  .like-card-icon { font-size:1.75rem; margin-bottom:0.75rem; display:block; }
+  .like-card-title {
+    font-family:'Cormorant Garamond',serif; font-size:1.12rem;
+    font-weight:400; color:var(--cream); display:block;
+  }
+
+  /* CARD MODAL */
+  .card-modal {
+    position:fixed; inset:0; background:rgba(12,4,2,0.9);
+    z-index:9000; display:none;
+    align-items:center; justify-content:center;
+    backdrop-filter:blur(22px);
+  }
+  .card-modal.active { display:flex; }
+  .card-modal-inner {
+    max-width:440px; width:90%;
+    padding:3rem; background:rgba(201,123,138,0.04);
+    border:1px solid rgba(201,123,138,0.2);
+    text-align:center; position:relative;
+  }
+  .card-modal-icon { font-size:2.8rem; margin-bottom:1rem; display:block; }
+  .card-modal-title {
+    font-family:'Cormorant Garamond',serif; font-size:1.9rem;
+    font-weight:300; color:var(--cream); margin-bottom:1.2rem;
+  }
+  .card-modal-text {
+    font-family:'Crimson Pro',serif; font-size:1.08rem;
+    font-style:italic; font-weight:200; color:var(--rose-soft); line-height:1.95;
+  }
+  .card-modal-close {
+    position:absolute; top:1rem; right:1rem;
+    background:none; border:none; color:var(--text-dim);
+    font-size:1.2rem; cursor:none;
+  }
+  .all-opened-msg {
+    margin-top:2.5rem;
+    font-family:'Dancing Script',cursive; font-size:1.38rem;
+    color:var(--rose-soft); text-align:center;
+    opacity:0; transition:opacity 1.2s ease;
+    max-width:500px; line-height:1.75;
+  }
+  .all-opened-msg.visible { opacity:1; }
+
+  /* ============================
+     SLIDE 4 UNIVERSE
+  ============================ */
+  #slide4 {
+    height:100vh; scroll-snap-align:start;
+    position:relative; overflow:hidden;
+  }
+  .universe-slider {
+    display:flex; height:100%;
+    transition:transform 0.9s cubic-bezier(0.77,0,0.175,1);
+    will-change:transform;
+  }
+  .universe-scene {
+    min-width:100vw; height:100%;
+    position:relative;
+    display:flex; align-items:center; justify-content:center;
+    flex-direction:column; padding:4rem; text-align:center;
+  }
+  .scene-bg {
+    position:absolute; inset:0; z-index:0;
+    transition:transform 0.12s ease;
+  }
+  .scene-s1 .scene-bg { background:radial-gradient(ellipse at 60% 40%, #3d1520 0%, #1a0a10 40%, #1e0d08 100%); }
+  .scene-s2 .scene-bg { background:radial-gradient(ellipse at 40% 60%, #1a0d20 0%, #100814 50%, #1e0d08 100%); }
+  .scene-s3 .scene-bg { background:radial-gradient(ellipse at 50% 50%, #2a1208 0%, #160904 50%, #1e0d08 100%); }
+  .scene-s4 .scene-bg { background:radial-gradient(ellipse at 50% 30%, #3d1e10 0%, #1f0f08 50%, #1e0d08 100%); }
+  .scene-s5 .scene-bg { background:radial-gradient(ellipse at 50% 60%, #2d0f1a 0%, #180810 50%, #1e0d08 100%); }
+
+  .scene-content { position:relative; z-index:10; max-width:600px; }
+  .scene-overtitle {
+    font-family:'Lato',sans-serif; font-weight:100;
+    font-size:0.63rem; letter-spacing:0.42em; text-transform:uppercase;
+    color:var(--rose); margin-bottom:1.2rem; display:block;
+  }
+  .scene-emoji {
+    font-size:2.5rem; margin-bottom:1.4rem; display:block;
+    filter:drop-shadow(0 0 20px rgba(201,123,138,0.45));
+  }
+  .scene-if {
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(1.6rem,3.5vw,2.6rem);
+    font-weight:300; font-style:italic; color:var(--cream);
+    line-height:1.2; margin-bottom:0.4rem;
+  }
+  .scene-title {
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(3rem,8vw,5.5rem); font-weight:300;
+    color:var(--rose-soft); line-height:0.95;
+    margin-bottom:1.4rem; letter-spacing:-0.02em;
+  }
+  .scene-desc {
+    font-family:'Crimson Pro',serif; font-size:1rem;
+    font-weight:200; font-style:italic; color:var(--cream-dim);
+    line-height:1.95; max-width:440px; margin:0 auto;
+  }
+  .scene-ending {
+    margin-top:2.5rem;
+    font-family:'Dancing Script',cursive; font-size:1.15rem;
+    color:rgba(232,180,190,0.65);
+  }
+  .slider-nav {
+    position:absolute; bottom:2.5rem; left:50%;
+    transform:translateX(-50%); z-index:20;
+    display:flex; gap:0.6rem; align-items:center;
+  }
+  .slider-dot {
+    width:6px; height:6px; border-radius:50%;
+    background:rgba(201,123,138,0.3); transition:all 0.3s; cursor:none;
+  }
+  .slider-dot.active { background:var(--rose); transform:scale(1.4); }
+  .slider-arrow {
+    position:absolute; top:50%; transform:translateY(-50%);
+    z-index:20; background:none;
+    border:1px solid rgba(201,123,138,0.2);
+    color:var(--rose); width:44px; height:44px;
+    display:flex; align-items:center; justify-content:center;
+    cursor:none; transition:all 0.3s; font-size:1.1rem;
+  }
+  .slider-arrow:hover { background:rgba(201,123,138,0.1); border-color:rgba(201,123,138,0.5); }
+  .slider-arrow.prev { left:2rem; }
+  .slider-arrow.next { right:2rem; }
+
+  /* ============================
+     SLIDE 5 LETTER
+  ============================ */
+  #slide5 {
+    min-height:100vh; scroll-snap-align:start;
+    position:relative;
+    display:flex; align-items:center; justify-content:center;
+    padding:6rem 2rem;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse at 30% 50%, rgba(201,123,138,0.05) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 30%, rgba(107,58,42,0.08) 0%, transparent 55%),
+      linear-gradient(180deg, #1e0d08, #221008, #1e0d08);
+  }
+  .letter-paper {
+    position:relative; z-index:5;
+    max-width:600px; width:100%;
+    background:rgba(247,237,232,0.025);
+    border:1px solid rgba(201,123,138,0.12);
+    border-top:2px solid rgba(201,123,138,0.28);
+    padding:3.5rem;
+    box-shadow:0 0 80px rgba(0,0,0,0.4), inset 0 0 60px rgba(201,123,138,0.02);
+  }
+  .letter-stamp {
+    position:absolute; top:-1px; right:3rem;
+    width:48px; height:58px;
+    border:1px solid rgba(201,123,138,0.22);
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.4rem; background:rgba(201,123,138,0.04);
+  }
+  .letter-date {
+    font-family:'Lato',sans-serif; font-weight:100;
+    font-size:0.63rem; letter-spacing:0.28em;
+    color:var(--text-dim); margin-bottom:2.5rem; display:block;
+  }
+  .letter-text {
+    font-family:'Cormorant Garamond',serif; font-size:1.12rem;
+    font-weight:300; line-height:2.05; color:var(--cream-dim);
+  }
+  .letter-text p { margin-bottom:1.1rem; }
+  .letter-text .hl { color:var(--rose-soft); font-style:italic; }
+  .letter-text .big { font-size:1.35rem; color:var(--cream); display:block; margin:1.4rem 0; }
+  .letter-sign {
+    margin-top:2.8rem;
+    font-family:'Dancing Script',cursive;
+    font-size:1.75rem; color:var(--rose-soft); display:block;
+  }
+  .typing-cursor {
+    display:inline-block; width:2px; height:1.05em;
+    background:var(--rose);
+    animation:blink 1s step-end infinite;
+    vertical-align:text-bottom; margin-left:2px;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  /* ============================
+     FINALE
+  ============================ */
+  #finale {
+    height:100vh; scroll-snap-align:start;
+    position:relative;
+    display:flex; align-items:center; justify-content:center;
+    flex-direction:column; overflow:hidden;
+  }
+  .finale-bg {
+    position:absolute; inset:0; z-index:0;
+    background:
+      radial-gradient(ellipse at center, rgba(201,123,138,0.14) 0%, transparent 60%),
+      #120608;
+  }
+  #confettiCanvas { position:absolute; inset:0; pointer-events:none; z-index:2; }
+  .finale-content {
+    position:relative; z-index:10;
+    text-align:center; display:flex; flex-direction:column; align-items:center;
+  }
+  .finale-small {
+    font-family:'Lato',sans-serif; font-weight:100;
+    font-size:0.68rem; letter-spacing:0.42em;
+    color:var(--rose); text-transform:uppercase;
+    opacity:0; margin-bottom:1.5rem;
+  }
+  .finale-title {
+    font-family:'Cormorant Garamond',serif; font-weight:300;
+    font-size:clamp(3.5rem,10vw,7.5rem); color:var(--cream);
+    line-height:1; opacity:0;
+  }
+  .finale-name {
+    font-family:'Dancing Script',cursive;
+    font-size:clamp(2rem,6vw,4rem); color:var(--rose-soft);
+    margin-top:0.3rem; opacity:0;
+  }
+  .finale-tagline {
+    font-family:'Crimson Pro',serif; font-size:1.1rem;
+    font-weight:200; font-style:italic; color:var(--text-dim);
+    margin-top:1.5rem; opacity:0; max-width:420px; line-height:1.85;
+  }
+  .replay-btn {
+    margin-top:2.8rem; padding:0.7rem 2rem;
+    border:1px solid rgba(201,123,138,0.3); background:transparent;
+    color:var(--text-dim); font-family:'Lato',sans-serif;
+    font-weight:100; font-size:0.68rem; letter-spacing:0.28em;
+    text-transform:uppercase; cursor:none; transition:all 0.4s; opacity:0;
+  }
+  .replay-btn:hover { border-color:var(--rose); color:var(--rose); }
+
+  /* AUDIO */
+  .audio-toggle {
+    position:fixed; bottom:2rem; right:2rem; z-index:1000;
+    width:42px; height:42px;
+    border:1px solid rgba(201,123,138,0.3);
+    background:rgba(30,13,8,0.82); color:var(--rose);
+    font-size:1rem; display:flex; align-items:center; justify-content:center;
+    cursor:none; backdrop-filter:blur(10px); transition:all 0.3s;
+  }
+  .audio-toggle:hover { border-color:var(--rose); background:rgba(201,123,138,0.1); }
+
+  /* REVEAL */
+  .reveal { opacity:0; transform:translateY(28px); transition:opacity 0.9s ease,transform 0.9s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  /* PARTICLES */
+  .particle {
+    position:fixed; border-radius:50%; pointer-events:none;
+    background:var(--rose); animation:floatP linear infinite; z-index:1;
+  }
+  @keyframes floatP {
+    0%{transform:translateY(100vh) translateX(0) scale(0);opacity:0}
+    10%{opacity:0.45} 90%{opacity:0.12}
+    100%{transform:translateY(-80px) translateX(var(--drift)) scale(0.4);opacity:0}
+  }
+
+  /* MOBILE */
+  @media(max-width:600px) {
+    .polaroid-img,.polaroid-placeholder { width:140px; height:140px; }
+    .polaroid-grid { gap:1rem; }
+    .like-card { width:140px; padding:1.4rem 0.7rem; }
+    .letter-paper { padding:2rem 1.4rem; }
+    .slider-arrow { display:none; }
+    .scene-title { font-size:clamp(2.2rem,10vw,4rem); }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor"      id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<canvas id="starsCanvas"></canvas>
+<div class="grain"></div>
+
+<audio id="bgMusic" loop preload="auto">
+  <!--
+    🎵 CARA PAKAI MUSIK:
+    Simpan file .mp3 ke folder yang sama dengan index.html
+    Ganti src menjadi nama file kamu, contoh:
+    <source src="music.mp3" type="audio/mpeg">
+  -->
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+<button class="audio-toggle" id="audioToggle">&#9834;</button>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose">&#10005;</button>
+  <div class="lb-placeholder" id="lbPlaceholder">&#127800;</div>
+  <p class="lightbox-caption" id="lbCaption"></p>
+</div>
+
+<!-- CARD MODAL -->
+<div class="card-modal" id="cardModal">
+  <div class="card-modal-inner">
+    <button class="card-modal-close" id="cardModalClose">&#10005;</button>
+    <span class="card-modal-icon"  id="cmIcon"></span>
+    <h3 class="card-modal-title"  id="cmTitle"></h3>
+    <p class="card-modal-text"    id="cmText"></p>
+  </div>
+</div>
+
+<!-- ============================================================
+     SLIDE 1 — HERO
+============================================================ -->
+<section id="slide1">
+  <div class="hero-bg"></div>
+  <div class="hero-photo">
+    <!--
+      Uncomment dan isi src dengan nama file foto kamu:
+      <img src="foto-utama.jpg" alt="">
+    -->
+  </div>
+  <div class="vignette"></div>
+
+  <div class="hero-content">
+    <span class="hero-label">&#8212; a little universe, just for you &#8212;</span>
+    <h1 class="hero-title">happy birthday.</h1>
+    <p class="hero-sub">"for the girl who accidentally became my favorite person."</p>
+    <div class="hero-clock" id="heroClock">00:00:00</div>
+    <button class="hero-btn" id="heroBtn">open this little universe</button>
+  </div>
+
+  <div class="scroll-indicator">
+    <span>scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 2 — MEMORIES
+============================================================ -->
+<section id="slide2">
+  <span class="section-label reveal">&#8212; ii &#8212;</span>
+  <h2 class="section-title reveal">memories with you</h2>
+  <p class="section-desc reveal">some moments i keep coming back to.</p>
+
+  <div class="polaroid-grid">
+    <div class="polaroid" data-idx="0">
+      <!-- <img src="foto1.jpg" alt="" class="polaroid-img"> -->
+      <div class="polaroid-placeholder">
+        <span class="ph-icon">&#128247;</span>
+        <span class="ph-text">foto 1</span>
+      </div>
+      <div class="polaroid-caption">the day i realized<br>i would remember this forever.</div>
+    </div>
+    <div class="polaroid" data-idx="1">
+      <!-- <img src="foto2.jpg" alt="" class="polaroid-img"> -->
+      <div class="polaroid-placeholder">
+        <span class="ph-icon">&#128247;</span>
+        <span class="ph-text">foto 2</span>
+      </div>
+      <div class="polaroid-caption">you looked too pretty here<br>honestly.</div>
+    </div>
+    <div class="polaroid" data-idx="2">
+      <!-- <img src="foto3.jpg" alt="" class="polaroid-img"> -->
+      <div class="polaroid-placeholder">
+        <span class="ph-icon">&#128247;</span>
+        <span class="ph-text">foto 3</span>
+      </div>
+      <div class="polaroid-caption">still one of my<br>favorite moments.</div>
+    </div>
+    <div class="polaroid" data-idx="3">
+      <!-- <img src="foto4.jpg" alt="" class="polaroid-img"> -->
+      <div class="polaroid-placeholder">
+        <span class="ph-icon">&#128247;</span>
+        <span class="ph-text">foto 4</span>
+      </div>
+      <div class="polaroid-caption">everything felt easy<br>that day.</div>
+    </div>
+    <div class="polaroid" data-idx="4">
+      <!-- <img src="foto5.jpg" alt="" class="polaroid-img"> -->
+      <div class="polaroid-placeholder">
+        <span class="ph-icon">&#128247;</span>
+        <span class="ph-text">foto 5</span>
+      </div>
+      <div class="polaroid-caption">i love how comfortable<br>everything feels with you.</div>
+    </div>
+    <div class="polaroid" data-idx="5">
+      <!-- <img src="foto6.jpg" alt="" class="polaroid-img"> -->
+      <div class="polaroid-placeholder">
+        <span class="ph-icon">&#128247;</span>
+        <span class="ph-text">foto 6</span>
+      </div>
+      <div class="polaroid-caption">some moments are just<br>quietly perfect.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 3 — THINGS I LIKE
+============================================================ -->
+<section id="slide3">
+  <span class="section-label reveal">&#8212; iii &#8212;</span>
+  <h2 class="section-title reveal">things i like about you</h2>
+  <div class="gold-line reveal"></div>
+  <p class="section-desc reveal">klik satu-satu, baca pelan-pelan.</p>
+
+  <div class="cards-grid">
+    <div class="like-card reveal"
+         data-icon="&#10024;"
+         data-title="Tawamu"
+         data-text="Ada sesuatu yang berbeda dari tawamu. Bukan cuma lucu, tapi hangat, tulus, dan entah kenapa selalu berhasil bikin hari jadi lebih ringan dari sebelumnya.">
+      <span class="like-card-icon">&#10024;</span>
+      <span class="like-card-title">Tawamu</span>
+    </div>
+    <div class="like-card reveal"
+         data-icon="&#127800;"
+         data-title="Matamu"
+         data-text="Matamu itu cerita sendiri. Kadang serius, kadang nakal, kadang jujur tanpa kamu sadari — dan aku selalu suka membacanya.">
+      <span class="like-card-icon">&#127800;</span>
+      <span class="like-card-title">Matamu</span>
+    </div>
+    <div class="like-card reveal"
+         data-icon="&#129293;"
+         data-title="Cara Kamu Peduli"
+         data-text="Kamu nggak perlu bilang aku peduli berkali-kali. Cara kamu ngecek, cara kamu tanya, cara kamu ada — itu sudah cukup dan lebih dari cukup.">
+      <span class="like-card-icon">&#129293;</span>
+      <span class="like-card-title">Cara Kamu Peduli</span>
+    </div>
+    <div class="like-card reveal"
+         data-icon="&#127769;"
+         data-title="Kejujuranmu"
+         data-text="Kamu selalu jujur, bahkan ketika mungkin lebih mudah untuk nggak. Dan aku suka itu, sangat.">
+      <span class="like-card-icon">&#127769;</span>
+      <span class="like-card-title">Kejujuranmu</span>
+    </div>
+    <div class="like-card reveal"
+         data-icon="&#127799;"
+         data-title="Versi Kamu yang Santai"
+         data-text="Saat kamu nggak trying too hard, saat kamu cuma jadi dirimu sendiri — itu versi kamu yang paling indah. Dan kamu mungkin nggak tahu itu.">
+      <span class="like-card-icon">&#127799;</span>
+      <span class="like-card-title">Versi Santaimu</span>
+    </div>
+    <div class="like-card reveal"
+         data-icon="&#128171;"
+         data-title="Kamu, Seluruhnya"
+         data-text="Bukan satu hal, tapi semuanya. Cara kamu ada, cara kamu berpikir, cara kamu hadir. Semua itu yang bikin kamu jadi kamu.">
+      <span class="like-card-icon">&#128171;</span>
+      <span class="like-card-title">Kamu, Seluruhnya</span>
+    </div>
+  </div>
+
+  <p class="all-opened-msg" id="allOpenedMsg">"and somehow, all of that became home to me."</p>
+</section>
+
+<!-- ============================================================
+     SLIDE 4 — UNIVERSE
+============================================================ -->
+<section id="slide4">
+  <div class="universe-slider" id="universeSlider">
+
+    <div class="universe-scene scene-s1">
+      <div class="scene-bg" id="scBg0"></div>
+      <div class="scene-content">
+        <span class="scene-overtitle">kalau kamu adalah&#8230;</span>
+        <span class="scene-emoji">&#127925;</span>
+        <p class="scene-if">sebuah lagu,</p>
+        <p class="scene-title">golden hour</p>
+        <p class="scene-desc">hangat, pelan, dan tanpa sadar sudah mengubah suasana hati sebelum lagu selesai. jenis lagu yang diputar ulang bukan karena kebiasaan, tapi karena terasa salah untuk berhenti.</p>
+      </div>
+    </div>
+
+    <div class="universe-scene scene-s2">
+      <div class="scene-bg" id="scBg1"></div>
+      <div class="scene-content">
+        <span class="scene-overtitle">kalau kamu adalah&#8230;</span>
+        <span class="scene-emoji">&#127769;</span>
+        <p class="scene-if">sebuah musim,</p>
+        <p class="scene-title">late summer</p>
+        <p class="scene-desc">malam yang hangat, bintang yang terlalu terang, dan perasaan bahwa waktu sedang berjalan lebih pelan dari biasanya. selalu ingin berlama-lama, tapi nggak pernah cukup.</p>
+      </div>
+    </div>
+
+    <div class="universe-scene scene-s3">
+      <div class="scene-bg" id="scBg2"></div>
+      <div class="scene-content">
+        <span class="scene-overtitle">kalau kamu adalah&#8230;</span>
+        <span class="scene-emoji">&#127968;</span>
+        <p class="scene-if">sebuah tempat,</p>
+        <p class="scene-title">pulang</p>
+        <p class="scene-desc">bukan gedung, bukan alamat. tapi perasaan itu — yang muncul saat kamu tahu kamu di tempat yang tepat, sama orang yang tepat, dan nggak perlu pura-pura jadi siapa-siapa.</p>
+      </div>
+    </div>
+
+    <div class="universe-scene scene-s4">
+      <div class="scene-bg" id="scBg3"></div>
+      <div class="scene-content">
+        <span class="scene-overtitle">kalau kamu adalah&#8230;</span>
+        <span class="scene-emoji">&#10024;</span>
+        <p class="scene-if">sebuah cahaya,</p>
+        <p class="scene-title">golden dusk</p>
+        <p class="scene-desc">cahaya itu — yang muncul tepat sebelum matahari tenggelam. yang bikin semuanya kelihatan lebih lembut, lebih hangat, lebih cantik dari yang sebenarnya.</p>
+      </div>
+    </div>
+
+    <div class="universe-scene scene-s5">
+      <div class="scene-bg" id="scBg4"></div>
+      <div class="scene-content">
+        <span class="scene-overtitle">kalau kamu adalah&#8230;</span>
+        <span class="scene-emoji">&#127756;</span>
+        <p class="scene-if">sebuah perasaan,</p>
+        <p class="scene-title">tenang</p>
+        <p class="scene-desc">bukan sekedar bahagia — tapi tenang. jenis tenang yang datang saat kamu nggak perlu khawatir, nggak perlu buru-buru, cukup ada dan terasa cukup.</p>
+        <p class="scene-ending">"maybe that's why everything feels softer with you around."</p>
+      </div>
+    </div>
+
+  </div>
+
+  <button class="slider-arrow prev" id="btnPrev">&#8592;</button>
+  <button class="slider-arrow next" id="btnNext">&#8594;</button>
+  <div class="slider-nav" id="sliderNav"></div>
+</section>
+
+<!-- ============================================================
+     SLIDE 5 — LETTER
+============================================================ -->
+<section id="slide5">
+  <div class="letter-paper reveal" id="letterPaper">
+    <div class="letter-stamp">&#128140;</div>
+    <span class="letter-date" id="letterDate">untitled letter &#8212; with love</span>
+    <div class="letter-text" id="letterContent"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FINALE
+============================================================ -->
+<section id="finale">
+  <div class="finale-bg"></div>
+  <canvas id="confettiCanvas"></canvas>
+  <div class="finale-content">
+    <span class="finale-small"   id="fs1">&#8212; wishing you the world &#8212;</span>
+    <h1 class="finale-title"     id="fs2">happy birthday</h1>
+    <p  class="finale-name"      id="fs3">rista. &#129293;</p>
+    <p  class="finale-tagline"   id="fs4">"see you in all the little moments ahead."</p>
+    <button class="replay-btn"   id="fs5">&#8593; replay memories</button>
+  </div>
+</section>
+
+<script>
+(function() {
+  "use strict";
+
+  /* ── CURSOR ── */
+  var dot  = document.getElementById("cursor");
+  var ring = document.getElementById("cursorRing");
+  var mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener("mousemove", function(e) {
+    mx = e.clientX; my = e.clientY;
+    dot.style.left = mx + "px";
+    dot.style.top  = my + "px";
+  });
+  (function animRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + "px";
+    ring.style.top  = ry + "px";
+    requestAnimationFrame(animRing);
+  })();
+
+  /* ── STARS ── */
+  var sc   = document.getElementById("starsCanvas");
+  var sctx = sc.getContext("2d");
+  var stars = [];
+  function initStars() {
+    sc.width  = window.innerWidth;
+    sc.height = window.innerHeight;
+    stars = [];
+    for (var i = 0; i < 180; i++) {
+      stars.push({
+        x:     Math.random() * sc.width,
+        y:     Math.random() * sc.height,
+        r:     Math.random() * 1.2 + 0.2,
+        a:     Math.random(),
+        speed: Math.random() * 0.003 + 0.001,
+        dx:    (Math.random() - 0.5) * 0.08,
+        dy:    (Math.random() - 0.5) * 0.08
+      });
+    }
+  }
+  (function drawStars() {
+    sctx.clearRect(0, 0, sc.width, sc.height);
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i];
+      s.a += s.speed; s.x += s.dx; s.y += s.dy;
+      if (s.x < 0)        s.x = sc.width;
+      if (s.x > sc.width) s.x = 0;
+      if (s.y < 0)         s.y = sc.height;
+      if (s.y > sc.height) s.y = 0;
+      var alpha = 0.28 + Math.abs(Math.sin(s.a)) * 0.65;
+      sctx.beginPath();
+      sctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      sctx.fillStyle = "rgba(201,123,138," + alpha + ")";
+      sctx.fill();
+    }
+    requestAnimationFrame(drawStars);
+  })();
+  initStars();
+  window.addEventListener("resize", initStars);
+
+  /* ── PARTICLES ── */
+  function createParticle() {
+    var p    = document.createElement("div");
+    p.className = "particle";
+    var size  = Math.random() * 2 + 1;
+    var drift = (Math.random() - 0.5) * 200;
+    p.style.cssText = [
+      "width:"  + size + "px",
+      "height:" + size + "px",
+      "left:"   + (Math.random() * 100) + "%",
+      "bottom:-10px",
+      "opacity:" + (Math.random() * 0.35 + 0.1),
+      "--drift:" + drift + "px",
+      "animation-duration:" + (Math.random() * 14 + 10) + "s",
+      "animation-delay:"    + (Math.random() * 8) + "s"
+    ].join(";");
+    document.body.appendChild(p);
+    setTimeout(function() { if (p.parentNode) p.parentNode.removeChild(p); }, 22000);
+  }
+  for (var pi = 0; pi < 28; pi++) createParticle();
+  setInterval(createParticle, 1600);
+
+  /* ── CLOCK ── */
+  function updateClock() {
+    var n = new Date();
+    var h = String(n.getHours()).padStart(2, "0");
+    var m = String(n.getMinutes()).padStart(2, "0");
+    var s = String(n.getSeconds()).padStart(2, "0");
+    var el = document.getElementById("heroClock");
+    if (el) el.textContent = h + ":" + m + ":" + s;
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  /* Letter date */
+  var ldEl = document.getElementById("letterDate");
+  if (ldEl) {
+    var months = ["January","February","March","April","May","June",
+                  "July","August","September","October","November","December"];
+    var dn = new Date();
+    ldEl.textContent = months[dn.getMonth()] + " " + dn.getDate() + ", " + dn.getFullYear();
+  }
+
+  /* ── HERO BUTTON ── */
+  var heroBtn = document.getElementById("heroBtn");
+  if (heroBtn) {
+    heroBtn.addEventListener("click", function() {
+      var s2 = document.getElementById("slide2");
+      if (s2) s2.scrollIntoView({ behavior: "smooth" });
+    });
+  }
+
+  /* ── SCROLL REVEAL ── */
+  var revealEls = document.querySelectorAll(".reveal");
+  var revealIO  = new IntersectionObserver(function(entries) {
+    for (var i = 0; i < entries.length; i++) {
+      if (entries[i].isIntersecting) entries[i].target.classList.add("visible");
+    }
+  }, { threshold: 0.14 });
+  for (var ri = 0; ri < revealEls.length; ri++) revealIO.observe(revealEls[ri]);
+
+  /* ── LIGHTBOX ── */
+  var lbCaptions = [
+    "the day i realized i would remember this forever.",
+    "you looked too pretty here, honestly.",
+    "still one of my favorite moments.",
+    "everything felt easy that day.",
+    "i love how comfortable everything feels with you.",
+    "some moments are just quietly perfect."
+  ];
+  var lb      = document.getElementById("lightbox");
+  var lbCap   = document.getElementById("lbCaption");
+  var lbClose = document.getElementById("lightboxClose");
+
+  function openLightbox(idx) {
+    lbCap.textContent = lbCaptions[idx] || "";
+    lb.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
+  if (lbClose) lbClose.addEventListener("click", function() {
+    lb.classList.remove("active"); document.body.style.overflow = "";
+  });
+  if (lb) lb.addEventListener("click", function(e) {
+    if (e.target === lb) { lb.classList.remove("active"); document.body.style.overflow = ""; }
+  });
+
+  var polaroids = document.querySelectorAll(".polaroid");
+  for (var pli = 0; pli < polaroids.length; pli++) {
+    (function(el) {
+      el.addEventListener("click", function() {
+        openLightbox(parseInt(el.getAttribute("data-idx") || "0", 10));
+      });
+    })(polaroids[pli]);
+  }
+
+  /* ── LIKE CARDS ── */
+  var openedCount = 0;
+  var cardEls     = document.querySelectorAll(".like-card");
+  var totalCards  = cardEls.length;
+  var cardModal   = document.getElementById("cardModal");
+  var cmIcon      = document.getElementById("cmIcon");
+  var cmTitle     = document.getElementById("cmTitle");
+  var cmText      = document.getElementById("cmText");
+  var cmClose     = document.getElementById("cardModalClose");
+  var allMsg      = document.getElementById("allOpenedMsg");
+
+  for (var ci = 0; ci < cardEls.length; ci++) {
+    (function(card) {
+      card.addEventListener("click", function() {
+        cmIcon.textContent  = card.getAttribute("data-icon")  || "";
+        cmTitle.textContent = card.getAttribute("data-title") || "";
+        cmText.textContent  = card.getAttribute("data-text")  || "";
+        cardModal.classList.add("active");
+        document.body.style.overflow = "hidden";
+        if (!card.classList.contains("opened")) {
+          card.classList.add("opened");
+          openedCount++;
+          if (openedCount >= totalCards && allMsg) {
+            setTimeout(function() { allMsg.classList.add("visible"); }, 500);
+          }
+        }
+      });
+    })(cardEls[ci]);
+  }
+  if (cmClose) cmClose.addEventListener("click", function() {
+    cardModal.classList.remove("active"); document.body.style.overflow = "";
+  });
+  if (cardModal) cardModal.addEventListener("click", function(e) {
+    if (e.target === cardModal) { cardModal.classList.remove("active"); document.body.style.overflow = ""; }
+  });
+
+  /* ── UNIVERSE SLIDER ── */
+  var currentScene = 0;
+  var totalScenes  = 5;
+  var sliderEl     = document.getElementById("universeSlider");
+  var navEl        = document.getElementById("sliderNav");
+  var dots         = [];
+
+  for (var di = 0; di < totalScenes; di++) {
+    var dot2 = document.createElement("div");
+    dot2.className = "slider-dot" + (di === 0 ? " active" : "");
+    (function(idx) {
+      dot2.addEventListener("click", function() { goToScene(idx); });
+    })(di);
+    navEl.appendChild(dot2);
+    dots.push(dot2);
+  }
+
+  function goToScene(n) {
+    currentScene = Math.max(0, Math.min(totalScenes - 1, n));
+    sliderEl.style.transform = "translateX(-" + (currentScene * 100) + "vw)";
+    for (var i = 0; i < dots.length; i++) {
+      if (i === currentScene) dots[i].classList.add("active");
+      else dots[i].classList.remove("active");
+    }
+  }
+
+  var btnPrev = document.getElementById("btnPrev");
+  var btnNext = document.getElementById("btnNext");
+  if (btnPrev) btnPrev.addEventListener("click", function() { goToScene(currentScene - 1); });
+  if (btnNext) btnNext.addEventListener("click", function() { goToScene(currentScene + 1); });
+
+  var touchStartX = 0;
+  var slide4 = document.getElementById("slide4");
+  if (slide4) {
+    slide4.addEventListener("touchstart", function(e) {
+      touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+    slide4.addEventListener("touchend", function(e) {
+      var diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) goToScene(currentScene + (diff > 0 ? 1 : -1));
+    });
+    slide4.addEventListener("mousemove", function(e) {
+      var x = (e.clientX / window.innerWidth  - 0.5) * 18;
+      var y = (e.clientY / window.innerHeight - 0.5) * 9;
+      var bg = document.getElementById("scBg" + currentScene);
+      if (bg) bg.style.transform = "translate(" + x + "px," + y + "px) scale(1.06)";
+    });
+  }
+
+  document.addEventListener("keydown", function(e) {
+    if (e.key === "ArrowRight") goToScene(currentScene + 1);
+    if (e.key === "ArrowLeft")  goToScene(currentScene - 1);
+  });
+
+  /* ── LETTER TYPING ── */
+  var letterLines = [
+    { text: "hi, birthday girl.",                                                      delay: 0    },
+    { text: "aku nggak terlalu jago bikin kata-kata sempurna...",                      delay: 1200 },
+    { text: "tapi kalau ada satu hal yang selalu aku yakin,",                          delay: 2700 },
+    { text: "aku bersyukur dunia pernah mempertemukan aku sama kamu.",                 delay: 4100, hl: true },
+    { text: "",                                                                         delay: 5000 },
+    { text: "kamu mungkin nggak tahu betapa seringnya aku mikirin hal-hal kecil itu,", delay: 5300 },
+    { text: "tawa kamu yang keluar tiba-tiba. cara kamu cerita tentang hal yang kamu suka.", delay: 6800 },
+    { text: "momen-momen biasa yang entah kenapa jadi nggak biasa sama kamu.",         delay: 8300, hl: true },
+    { text: "",                                                                         delay: 9200 },
+    { text: "hari ini kamu genap satu tahun lebih tua,",                               delay: 9400 },
+    { text: "dan aku harap setiap tahun ke depannya,",                                 delay: 10600 },
+    { text: "kamu selalu dikelilingi hal-hal yang beneran bikin kamu bahagia.",        delay: 11800 },
+    { text: "",                                                                         delay: 12600 },
+    { text: "thank you for existing.",                                                 delay: 12800, big: true },
+    { text: "and thank you for letting me be part of your universe.",                  delay: 14200, hl: true }
+  ];
+
+  var letterTyped   = false;
+  var letterContent = document.getElementById("letterContent");
+
+  var letterIO = new IntersectionObserver(function(entries) {
+    for (var i = 0; i < entries.length; i++) {
+      if (entries[i].isIntersecting && !letterTyped) {
+        letterTyped = true;
+        typeLetter();
+      }
+    }
+  }, { threshold: 0.3 });
+  var slide5el = document.getElementById("slide5");
+  if (slide5el) letterIO.observe(slide5el);
+
+  function typeLetter() {
+    if (!letterContent) return;
+    letterContent.innerHTML = "<span class=\"typing-cursor\"></span>";
+
+    for (var li = 0; li < letterLines.length; li++) {
+      (function(line, idx) {
+        setTimeout(function() {
+          var old = letterContent.querySelector(".typing-cursor");
+          if (old && old.parentNode) old.parentNode.removeChild(old);
+
+          if (line.text === "") {
+            letterContent.appendChild(document.createElement("br"));
+          } else {
+            var p = document.createElement("p");
+            if (line.hl)  p.classList.add("hl");
+            if (line.big) p.classList.add("big");
+            p.style.opacity    = "0";
+            p.style.transform  = "translateY(10px)";
+            p.style.transition = "opacity 0.85s, transform 0.85s";
+            p.textContent = line.text;
+            letterContent.appendChild(p);
+            requestAnimationFrame(function() {
+              setTimeout(function() {
+                p.style.opacity   = "1";
+                p.style.transform = "translateY(0)";
+              }, 30);
+            });
+          }
+
+          var cur = document.createElement("span");
+          cur.className = "typing-cursor";
+          letterContent.appendChild(cur);
+
+          if (idx === letterLines.length - 1) {
+            setTimeout(function() {
+              if (cur.parentNode) cur.parentNode.removeChild(cur);
+              var sign = document.createElement("span");
+              sign.className   = "letter-sign";
+              sign.textContent = "\u2014 with love \uD83E\uDD0D";
+              letterContent.appendChild(sign);
+            }, 1200);
+          }
+        }, line.delay);
+      })(letterLines[li], li);
+    }
+  }
+
+  /* ── FINALE ── */
+  var finaleStarted = false;
+  var finaleIO = new IntersectionObserver(function(entries) {
+    for (var i = 0; i < entries.length; i++) {
+      if (entries[i].isIntersecting && !finaleStarted) {
+        finaleStarted = true;
+        startFinale();
+      }
+    }
+  }, { threshold: 0.4 });
+  var finaleEl = document.getElementById("finale");
+  if (finaleEl) finaleIO.observe(finaleEl);
+
+  function revealEl(id, delay) {
+    setTimeout(function() {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.style.transition = "opacity 1.2s ease, transform 1.2s ease";
+      el.style.transform  = "translateY(22px)";
+      el.style.opacity    = "0";
+      requestAnimationFrame(function() {
+        setTimeout(function() {
+          el.style.transform = "translateY(0)";
+          el.style.opacity   = "1";
+        }, 40);
+      });
+    }, delay);
+  }
+
+  function startFinale() {
+    revealEl("fs1", 300);
+    revealEl("fs2", 750);
+    revealEl("fs3", 1150);
+    revealEl("fs4", 1650);
+    revealEl("fs5", 2200);
+    setTimeout(startConfetti, 1300);
+  }
+
+  var replayBtn = document.getElementById("fs5");
+  if (replayBtn) replayBtn.addEventListener("click", function() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  /* ── CONFETTI ── */
+  function startConfetti() {
+    var canvas = document.getElementById("confettiCanvas");
+    if (!canvas) return;
+    var cctx = canvas.getContext("2d");
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+    var colors = ["#c97b8a","#e8b4be","#f5dce2","#a05060","#d4869a","#f7ede8","#6b3a2a"];
+    var pieces = [];
+    for (var i = 0; i < 130; i++) {
+      pieces.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height - canvas.height,
+        w: Math.random() * 8 + 3,
+        h: Math.random() * 4 + 2,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        rot: Math.random() * 360,
+        rotSpeed: (Math.random() - 0.5) * 3.5,
+        vy: Math.random() * 2.5 + 0.8,
+        vx: (Math.random() - 0.5) * 1.2,
+        opacity: Math.random() * 0.55 + 0.45
+      });
+    }
+    var frame = 0;
+    (function drawConf() {
+      if (frame > 420) { cctx.clearRect(0, 0, canvas.width, canvas.height); return; }
+      cctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (var i = 0; i < pieces.length; i++) {
+        var p = pieces[i];
+        p.y += p.vy; p.x += p.vx; p.rot += p.rotSpeed;
+        if (p.y > canvas.height) { p.y = -10; p.x = Math.random() * canvas.width; }
+        cctx.save();
+        cctx.translate(p.x, p.y);
+        cctx.rotate(p.rot * Math.PI / 180);
+        cctx.globalAlpha = p.opacity * (1 - frame / 420);
+        cctx.fillStyle   = p.color;
+        cctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        cctx.restore();
+      }
+      frame++;
+      requestAnimationFrame(drawConf);
+    })();
+  }
+
+  /* ── AUDIO ── */
+  var audio        = document.getElementById("bgMusic");
+  var audioBtn     = document.getElementById("audioToggle");
+  var audioStarted = false;
+
+  function fadeInAudio() {
+    var vol = 0;
+    var iv = setInterval(function() {
+      vol += 0.005;
+      if (vol >= 0.38) { audio.volume = 0.38; clearInterval(iv); return; }
+      audio.volume = vol;
+    }, 100);
+  }
+
+  function tryPlayAudio() {
+    if (audioStarted) return;
+    audio.volume = 0;
+    var promise = audio.play();
+    if (promise !== undefined) {
+      promise.then(function() {
+        audioStarted = true;
+        fadeInAudio();
+      }).catch(function() {});
+    }
+  }
+
+  if (audioBtn) {
+    audioBtn.addEventListener("click", function() {
+      if (!audioStarted) {
+        tryPlayAudio();
+      } else if (audio.paused) {
+        audio.play();
+        audioBtn.innerHTML = "&#9834;";
+      } else {
+        audio.pause();
+        audioBtn.innerHTML = "&#9835;";
+      }
+    });
+  }
+
+  document.addEventListener("click",  tryPlayAudio, { once: true });
+  document.addEventListener("scroll", tryPlayAudio, { once: true });
+  setTimeout(tryPlayAudio, 600);
+
+})();
+</script>
+</body>
+</html>
